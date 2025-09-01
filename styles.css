@@ -1,0 +1,51 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #fff;
+}
+
+.page { padding: 24px; display: flex; flex-direction: column; align-items: center; }
+.title { font-size: 24px; font-weight: 400; margin: 80px 0 56px; text-align: center; }
+
+/* 改为绝对定位舞台：第一行5个，第二行4个，卡片通过 transform 平滑移动 */
+.grid {
+  position: relative;
+  /* 具体尺寸交由 JS 根据内容自适应设置 */
+  touch-action: none; /* 指针拖拽避免手势滚动干扰 */
+  padding: 16px; /* 与脚本中的 PADDING 对齐 */
+  background: #F7F7F7;
+  border-radius: 8px;
+}
+
+.cell {
+  width: 100px;
+    height: 100px; /* 1:1 正方形 */
+  background: #f2f3f5;
+  border-radius: 8px;
+  overflow: hidden;
+  position: absolute; /* 绝对定位，通过 transform 布局 */
+  left: 0; top: 0;
+  cursor: grab;
+  user-select: none;
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease;
+  will-change: transform;
+}
+
+.cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.cell.dragging { opacity: .96; cursor: grabbing; box-shadow: 0 12px 24px rgba(0,0,0,.18); z-index: 3; transition: none; }
+.cell.drop-target { box-shadow: 0 0 0 3px rgba(64,158,255,.35); }
+.cell.moving { box-shadow: 0 6px 18px rgba(0,0,0,.16); }
+
+.placeholder { background: #eef0f3; border: 1px dashed #d3d7de; }
+
+
