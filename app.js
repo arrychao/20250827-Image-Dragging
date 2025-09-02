@@ -72,8 +72,18 @@ function render() {
     img.addEventListener("error", () => {
       if (!img.dataset._retry) { img.dataset._retry = "1"; img.src = encodeURI(src); }
     });
-
     cell.appendChild(img);
+
+    // 悬浮覆盖层（文件：image/hover图片.png），缺失时自动隐藏
+    const overlay = document.createElement("div");
+    overlay.className = "overlay";
+    const overlayImg = document.createElement("img");
+    overlayImg.src = encodeURI("image/hover图层.png");
+    overlayImg.alt = "";
+    overlayImg.draggable = false;
+    overlayImg.addEventListener("error", () => { overlay.style.display = "none"; });
+    overlay.appendChild(overlayImg);
+    cell.appendChild(overlay);
     grid.appendChild(cell);
     keyToEl.set(src, cell);
 
